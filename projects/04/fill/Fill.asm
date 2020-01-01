@@ -12,3 +12,64 @@
 // the screen should remain fully clear as long as no key is pressed.
 
 // Put your code here.
+
+	@SCREEN
+	D=A
+	
+	@R0 //Start address
+	M=D
+
+	@KBD
+	D=A
+	
+	@R1 //Last address
+	M=D-1
+	
+	@R3 //color
+	M=0
+
+(LOOP)
+
+	@R3
+	M=-1
+	
+	@R0
+	D=M
+	
+	@R2 //First address to fill
+	M=D-1
+	
+	@KBD
+	D=M
+	@DRAW
+	D;JGT
+	
+	@R3
+	M=0
+	
+(DRAW)
+	
+	@R1
+	D=M
+	
+	@R2
+	D=D-M
+	@LOOP
+	D;JEQ
+	
+	@R3
+	D=M
+	
+	@R2
+	M=M+1
+	
+	@R2
+	A=M
+	M=D
+	
+	@DRAW
+	0;JMP
+	
+	
+
+	

@@ -1,0 +1,5 @@
+D=1
+(START)
+D=1
+@START
+0;JMP

@@ -1,0 +1,30 @@
+function Main.main 2
+push constant 0
+call Tank.new 1
+pop local 0
+push constant 10
+pop local 1
+label WHILE_EXP0
+push local 1
+push constant 20
+lt
+not
+if-goto WHILE_END0
+push local 0
+push local 1
+call Tank.draw 2
+pop temp 0
+push constant 200
+call Sys.wait 1
+pop temp 0
+push local 0
+push local 1
+call Tank.erase 2
+pop temp 0
+goto WHILE_EXP0
+label WHILE_END0
+push local 0
+call Tank.dispose 1
+pop temp 0
+push constant 0
+return

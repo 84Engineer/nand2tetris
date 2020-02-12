@@ -1,0 +1,23 @@
+class Main {
+	function void main() {
+		var TankGame game;
+		let game = TankGame.new();
+		do game.run();
+		do game.dispose();
+		return;
+		
+		let tank = Tank.new(0);
+		let loc = 10;
+		
+		
+		while (loc < 20) {
+			do tank.draw(loc);
+			do Sys.wait(200);
+			do tank.erase(loc);
+			//let loc = loc + 1;
+		}
+				
+		do tank.dispose();
+		return;
+	}
+}

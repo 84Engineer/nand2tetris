@@ -2,21 +2,111 @@ class Tank {
 
 	field int memAddress;
 	field int initLocation;
+	field int upperBorder;
+	field int downBorder;
 
 	constructor Tank new(int initLoc) {
 		let initLocation = initLoc;
 		let memAddress = 16384;
+		let upperBorder = 16384;
+		let downBorder = 16384 + 8192;
 		return this;
 	}
-
+	
+	method void moveUp() {
+		do erase();
+		let memAddress = memAddress - 512;
+		do drawUp();
+		return;
+	}
+	
+	method void moveDown() {
+		do erase();
+		let memAddress = memAddress + 512;
+		do drawDown();
+		return;
+	}
+	
+	method void moveLeft() {
+		do erase();
+		let memAddress = memAddress - 1;
+		do drawLeft();
+		return;
+	}
+	
+	method void moveRight() {
+		do erase();
+		let memAddress = memAddress + 1;
+		do drawRight();
+		return;
+	}
 
 	method void dispose() {
 		do Memory.deAlloc(this);
 		return;
 	}
    
-	method void draw(int location) {
-		let memAddress = memAddress + 512 ;
+	method void drawUp() {
+		do Memory.poke(memAddress+0, 960);
+		do Memory.poke(memAddress+32, 384);
+		do Memory.poke(memAddress+64, 384);
+		do Memory.poke(memAddress+96, 29070);
+		do Memory.poke(memAddress+128, 20874);
+		do Memory.poke(memAddress+160, 20874);
+		do Memory.poke(memAddress+192, 21450);
+		do Memory.poke(memAddress+224, 21546);
+		do Memory.poke(memAddress+256, 22938);
+		do Memory.poke(memAddress+288, 22554);
+		do Memory.poke(memAddress+320, 22938);
+		do Memory.poke(memAddress+352, 21546);
+		do Memory.poke(memAddress+384, 21450);
+		do Memory.poke(memAddress+416, 28686);
+		do Memory.poke(memAddress+448, 0);
+		do Memory.poke(memAddress+480, 0);
+		return;
+	}
+	
+	method void drawDown() {
+		do Memory.poke(memAddress+0, 0);
+		do Memory.poke(memAddress+32, 0);
+		do Memory.poke(memAddress+64, 28686);
+		do Memory.poke(memAddress+96, 21450);
+		do Memory.poke(memAddress+128, 21546);
+		do Memory.poke(memAddress+160, 22938);
+		do Memory.poke(memAddress+192, 22554);
+		do Memory.poke(memAddress+224, 22938);
+		do Memory.poke(memAddress+256, 21546);
+		do Memory.poke(memAddress+288, 21450);
+		do Memory.poke(memAddress+320, 20874);
+		do Memory.poke(memAddress+352, 20874);
+		do Memory.poke(memAddress+384, 29070);
+		do Memory.poke(memAddress+416, 384);
+		do Memory.poke(memAddress+448, 384);
+		do Memory.poke(memAddress+480, 960);
+		return;
+	}
+	
+	method void drawLeft() {
+		do Memory.poke(memAddress+0, 0);
+		do Memory.poke(memAddress+32, 16376);
+		do Memory.poke(memAddress+64, 8200);
+		do Memory.poke(memAddress+96, 16376);
+		do Memory.poke(memAddress+128, 1792);
+		do Memory.poke(memAddress+160, 2176);
+		do Memory.poke(memAddress+192, 4161);
+		do Memory.poke(memAddress+224, 5503);
+		do Memory.poke(memAddress+256, 5503);
+		do Memory.poke(memAddress+288, 4161);
+		do Memory.poke(memAddress+320, 2176);
+		do Memory.poke(memAddress+352, 1792);
+		do Memory.poke(memAddress+384, 16376);
+		do Memory.poke(memAddress+416, 8200);
+		do Memory.poke(memAddress+448, 16376);
+		do Memory.poke(memAddress+480, 0);
+		return;
+	}
+	
+	method void drawRight() {
 		do Memory.poke(memAddress+0, 0);
 		do Memory.poke(memAddress+32, 8188);
 		do Memory.poke(memAddress+64, 4100);
@@ -36,8 +126,7 @@ class Tank {
 		return;
 	}
 	
-	method void erase(int location) {
-		let memAddress = memAddress ;
+	method void erase() {
 		do Memory.poke(memAddress+0, 0);
 		do Memory.poke(memAddress+32, 0);
 		do Memory.poke(memAddress+64, 0);

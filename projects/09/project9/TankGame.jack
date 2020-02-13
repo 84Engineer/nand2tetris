@@ -2,7 +2,7 @@ class TankGame {
 	field Tank tank;
 	field int direction;
 	
-	constructor SquareGame new() {
+	constructor TankGame new() {
       let tank = Tank.new(0);
       let direction = 0;
       return this;
@@ -17,17 +17,17 @@ class TankGame {
          // waits for a key to be pressed
          while (key = 0) {
             let key = Keyboard.keyPressed();
+			let direction = 0;
             do moveTank();
          }
-         if (key = 81)  { let exit = true; }     // q key
-         if (key = 131) { let direction = 1; }   // up arrow
-         if (key = 133) { let direction = 2; }   // down arrow
-         if (key = 130) { let direction = 3; }   // left arrow
-         if (key = 132) { let direction = 4; }   // right arrow
-
          // waits for the key to be released
          while (~(key = 0)) {
-            let key = Keyboard.keyPressed();
+            let key = Keyboard.keyPressed();			
+			if (key = 81)  { let exit = true; }     // q key
+            if (key = 131) { let direction = 1; }   // up arrow
+            if (key = 133) { let direction = 2; }   // down arrow
+            if (key = 130) { let direction = 3; }   // left arrow
+            if (key = 132) { let direction = 4; }   // right arrow			
             do moveTank();
          }
      } // while
@@ -39,7 +39,7 @@ class TankGame {
       if (direction = 2) { do tank.moveDown(); }
       if (direction = 3) { do tank.moveLeft(); }
       if (direction = 4) { do tank.moveRight(); }
-      do Sys.wait(300);  // delays the next movement
+      do Sys.wait(100);  // delays the next movement
       return;
    }
    

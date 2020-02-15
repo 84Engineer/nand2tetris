@@ -1,43 +1,54 @@
 class Tank {
 
 	field int memAddress;
-	field int initLocation;
 	field int upperBorder;
 	field int downBorder;
+	field int horizontalLocation;
+	filed int lastDirection;
 
 	constructor Tank new(int initLoc) {
-		let initLocation = initLoc;
-		let memAddress = 16384;
 		let upperBorder = 16384;
-		let downBorder = 16384 + 8192;
+		let downBorder = upperBorder + 8192;
+		let memAddress = upperBorder + initLoc;
+		let horizontalLocation = 0;
 		return this;
 	}
 	
 	method void moveUp() {
-		do erase();
-		let memAddress = memAddress - 512;
-		do drawUp();
+		if (~((memAddress - 512) < upperBorder)) {
+			do erase();
+			let memAddress = memAddress - 512;
+			do drawUp();
+		}
 		return;
 	}
 	
 	method void moveDown() {
-		do erase();
-		let memAddress = memAddress + 512;
-		do drawDown();
+		if ((downBorder > (memAddress + 512))) {
+			do erase();
+			let memAddress = memAddress + 512;
+			do drawDown();
+		}
 		return;
 	}
 	
 	method void moveLeft() {
-		do erase();
-		let memAddress = memAddress - 1;
-		do drawLeft();
+		if (~((horizontalLocation - 1) < 0)) {
+			do erase();
+			let horizontalLocation = horizontalLocation - 1;
+			let memAddress = memAddress - 1;
+			do drawLeft();
+		}
 		return;
 	}
 	
 	method void moveRight() {
-		do erase();
-		let memAddress = memAddress + 1;
-		do drawRight();
+		if (((horizontalLocation + 1) < 32)) {
+			do erase();
+			let horizontalLocation = horizontalLocation + 1;
+			let memAddress = memAddress + 1;
+			do drawRight();
+		}
 		return;
 	}
 
@@ -63,6 +74,7 @@ class Tank {
 		do Memory.poke(memAddress+416, 28686);
 		do Memory.poke(memAddress+448, 0);
 		do Memory.poke(memAddress+480, 0);
+		let lastDirection = 0;
 		return;
 	}
 	
@@ -83,6 +95,7 @@ class Tank {
 		do Memory.poke(memAddress+416, 384);
 		do Memory.poke(memAddress+448, 384);
 		do Memory.poke(memAddress+480, 960);
+		let lastDirection = 1;
 		return;
 	}
 	
@@ -103,6 +116,7 @@ class Tank {
 		do Memory.poke(memAddress+416, 8200);
 		do Memory.poke(memAddress+448, 16376);
 		do Memory.poke(memAddress+480, 0);
+		let lastDirection = 2;
 		return;
 	}
 	
@@ -123,6 +137,7 @@ class Tank {
 		do Memory.poke(memAddress+416, 4100);
 		do Memory.poke(memAddress+448, 8188);
 		do Memory.poke(memAddress+480, 0);
+		let lastDirection = 3;
 		return;
 	}
 	

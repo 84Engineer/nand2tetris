@@ -1,0 +1,30 @@
+class Bullet {
+	
+	field int memAddress;
+	field int dir;
+	
+	constructor Bullet new(int initLocation, int direction) {
+		let memAddress = initLocation;
+		let dir = direction;
+	}
+	
+	method void go() {
+	
+		if (dir = 3) {
+			do erase();
+			let memAddress = memAddress + 1;
+			do draw();
+		}
+	
+	}
+	
+	method void erase() {
+		do Memory.poke(memAddress, 0);
+		return;
+	}
+	
+	method void draw() {
+		do Memory.poke(memAddress, 1);
+		return;
+	}
+}

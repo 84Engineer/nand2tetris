@@ -51,7 +51,16 @@ class Tank {
 		}
 		return;
 	}
-
+	
+	method Bullet shoot() {
+		if (lastDirection = 3) {
+			var Bullet bullet;
+			let bullet = Bullet.new(memAddress + 256 + 1);
+		}
+		return bullet;
+	
+	}
+	
 	method void dispose() {
 		do Memory.deAlloc(this);
 		return;

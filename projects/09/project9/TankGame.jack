@@ -31,9 +31,10 @@ class TankGame {
             if (key = 133) { let direction = 2; }   // down arrow
             if (key = 130) { let direction = 3; }   // left arrow
             if (key = 132) { let direction = 4; }   // right arrow		
-			if (key = 32) { 
-				let shoot = true;
-				do tankShoot();
+			if (key = 32) {
+				var Bullet bullet;
+				bullet = do tank.shoot(); 
+				do tankShoot(bullet);
 			}
             do moveTank();
          }
@@ -46,12 +47,15 @@ class TankGame {
       if (direction = 2) { do tank.moveDown(); }
       if (direction = 3) { do tank.moveLeft(); }
       if (direction = 4) { do tank.moveRight(); }
-      if (direction = 0) {
+      if (~(direction = 0)) {
 		do Sys.wait(100);  // delays the next movement
 	  }
       return;
    }
    
+   method void tankShoot(Bullet bullet) {
+	  
+   }
    
    method void dispose() {
       do tank.dispose();

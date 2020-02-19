@@ -104,11 +104,6 @@ class SnakeGrid {
             let curX = curX + 1;
         }
 
-        // draw the horizontal line dividing the game
-        // area from the status line
-        //do Screen.setColor(true);
-        //do Screen.drawLine(0, (sizeY*4)+1, (sizeX*4-1), (sizeY*4)+1);
-
         return;
 
     }

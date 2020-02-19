@@ -15,8 +15,7 @@ class SnakeGame {
     // creates a new SnakeGame
     constructor SnakeGame new() {
 
-        // use the delay in the user pressing a key to seed our PRNG
-        do Random.setSeed(RandSeed.getSeed());
+        do Random.setSeed(42);
 
         // init game vars
         let cycle = 0;

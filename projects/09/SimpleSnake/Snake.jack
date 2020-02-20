@@ -150,7 +150,7 @@ class Snake {
         }
         if( dir = 2 ) {
             // down
-            if( posY = grid.sizeY() ) {
+            if( posY = grid.getVertical() ) {
                 return false;
             }
             else {
@@ -168,7 +168,7 @@ class Snake {
         }
         if( dir = 4 ) {
             // right
-            if( posX = grid.sizeX() ) {
+            if( posX = grid.getHorizontal() ) {
                 return false;
             }
             else {

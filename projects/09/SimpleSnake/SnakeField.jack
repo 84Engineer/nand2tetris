@@ -1,0 +1,123 @@
+class SnakeField {
+
+    field SnakeGame game;
+    field int horizontal, vertical;
+    field int baitHorizontal, baitVertical;
+    field Array snakeField;
+
+    constructor SnakeField new(SnakeGame theGame) {
+        let game = theGame;
+        let horizontal = 128;
+        let vertical = 64;
+        do init();
+        return this;
+    }
+	
+	method void init() {
+        var int currentX, currentY;
+        var Array xsnakeField;
+        let snakeField = Array.new(horizontal);
+        let currentX = 0;
+        while(currentX < horizontal) {
+            let xsnakeField = Array.new(vertical);
+            let currentY = 0;
+            while(currentY < vertical) {
+                let xsnakeField[currentY] = false;
+                let currentY = currentY + 1;
+            }
+            let snakeField[currentX] = xsnakeField;
+            let currentX = currentX + 1;
+        }
+        return;
+    }
+	
+	method int getHorizontal() {
+        return horizontal;
+    }
+	
+    method int getVertical() {
+        return vertical;
+    }	
+
+    method void putBait() {
+
+        var boolean found;
+        var int randomX, randomY;
+
+        let found = false;
+        while(~found) {
+            let randomX = Random.randRange(horizontal);
+            let randomY = Random.randRange(vertical);
+            if(~getFilled(randomX, randomY) ) {
+                let found = true;
+            }
+        }
+        let baitHorizontal = randomX;
+        let baitVertical = randomY;
+        return;
+    }
+
+    method void drawBait() {
+        do Screen.setColor(true);
+        do Screen.drawCircle(
+			(baitHorizontal * 4) + 2, 
+			(baitVertical * 4) + 2, 2);
+        return;
+    }
+
+    method void setFilled(int x, int y, boolean filled) {
+        var Array xsnakeField;
+        let xsnakeField = snakeField[x];
+        let xsnakeField[y] = filled;
+        return;
+    }
+	
+    method boolean getFilled(int x, int y) {
+        var Array xsnakeField;
+        let xsnakeField = snakeField[x];
+        if(xsnakeField[y]) { return true; } 
+			else { return false; }
+    }
+    method boolean checkBait(int x, int y) {
+        if(x = baitHorizontal) {
+            if(y = baitVertical) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    method void drawBox(int x, int y) {
+        do Screen.setColor(true);
+        do Screen.drawRectangle(
+			x * 4, y * 4, 
+			(x * 4) + 4, 
+			(y * 4) + 4);
+        do setFilled(x, y, true);
+        return;
+    }
+
+    method void clearBox(int x, int y) {
+        do Screen.setColor(false);
+        do Screen.drawRectangle(
+			x * 4, y * 4, 
+			(x * 4) + 4, 
+			(y * 4) + 4);
+        do setFilled(x, y, false);
+        return;
+    }
+	
+	method void dispose() {
+        var int currentX;
+        var Array xsnakeField;
+        let currentX = 0;
+        while(currentX < horizontal) {
+            let xsnakeField = snakeField[currentX];
+            do xsnakeField.dispose();
+            let currentX = currentX + 1;
+        }
+        do Memory.deAlloc(this);
+        return;
+    }
+
+}

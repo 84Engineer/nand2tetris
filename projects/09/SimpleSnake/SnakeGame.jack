@@ -1,31 +1,20 @@
 class SnakeGame {
 
     field Snake snake;
-    field SnakeGrid grid;
-    field int cycle;
+    field SnakeField snakeField;
+    field int step;
     field int delay;
 
     constructor SnakeGame new() {
-
-        do Random.setSeed(42);
-
-        let cycle = 0;
+        let step = 0;
         let delay = 100;
-        let grid = SnakeGrid.new(this, 512, 256);
-        let snake = Snake.new(this, grid.getHorizontal() / 2, grid.getVertical() / 2, 10, 3);
-        do grid.placeFood();
+        let snakeField = SnakeField.new(this);
+        let snake = Snake.new(this, 
+			snakeField.getHorizontal() / 2, 
+			snakeField.getVertical() / 2);
+        do snakeField.putBait();
 
         return this;
-    }
-
-    method void dispose() {
-
-        do snake.dispose();
-        do grid.dispose();
-        do Memory.deAlloc(this);
-
-        return;
-
     }
 
     method void run() {
@@ -40,80 +29,64 @@ class SnakeGame {
             do snake.rememberDir();
 
             let key = Keyboard.keyPressed();
-            if(key = 81) {
-                let exit = true;
-            }
+            if(key = 81) { let exit = true; }
             if(key = 130) {
-                if(snake.getLastDir() = 1) {
-                    do snake.setDir(3);
-                }
-                if(snake.getLastDir() = 2) {
-                    do snake.setDir(3);
-                }
+                if(snake.getLastDir() = 1) { do snake.setDir(3); }
+                if(snake.getLastDir() = 2) { do snake.setDir(3); }
             }
             if(key = 131) {
-                if(snake.getLastDir() = 3) {
-                    do snake.setDir(1);
-                }
-                if(snake.getLastDir() = 4) {
-                    do snake.setDir(1);
-                }
+                if(snake.getLastDir() = 3) { do snake.setDir(1); }
+                if(snake.getLastDir() = 4) { do snake.setDir(1); }
             }
             if(key = 132) {
-                if(snake.getLastDir() = 1) {
-                    do snake.setDir(4);
-                }
-                if(snake.getLastDir() = 2) {
-                    do snake.setDir(4);
-                }
+                if(snake.getLastDir() = 1) { do snake.setDir(4); }
+                if(snake.getLastDir() = 2) { do snake.setDir(4); }
             }
             if(key = 133) {
-                if(snake.getLastDir() = 3) {
-                    do snake.setDir(2);
-                }
-                if(snake.getLastDir() = 4) {
-                    do snake.setDir(2);
-                }
+                if(snake.getLastDir() = 3) { do snake.setDir(2); }
+                if(snake.getLastDir() = 4) { do snake.setDir(2); }
             }
 
             if(~snake.tryMove()) {
                 do Sys.halt();
             }
 
-            if(grid.checkFood(snake.posX(), snake.posY())) {
-                do snake.eatFood();
-                do grid.placeFood();
+            if(snakeField.checkBait(snake.getPositionHorizontal(), snake.getPositionVertical())) {
+                do snake.takeBait();
+                do snakeField.putBait();
             }
 
-            do snake.grow(cycle);
-            do grid.drawFood();
+            do snake.grow(step);
+            do snakeField.drawBait();
             do Sys.wait(delay);
-            do nextCycle();
+            do nextStep();
 
             if(snake.checkRewriteHistory()) {
-                let cycle = snake.getLength();
+                let step = snake.getLength();
             }
         }
-
         do Sys.halt();
-
         return;
-
     }
 
-    method int nextCycle() {
-        let cycle = cycle + 1;
-        return cycle;
+    method int nextStep() {
+        let step = step + 1;
+        return step;
     }
 
-    method SnakeGrid getGrid() {
-        return grid;
+    method SnakeField getSnakeField() {
+        return snakeField;
     }
-    method Snake getSnake() {
-        return snake;
+	
+    method int getStep() {
+        return step;
     }
-    method int getCycle() {
-        return cycle;
+	
+	method void dispose() {
+        do snake.dispose();
+        do snakeField.dispose();
+        do Memory.deAlloc(this);
+        return;
     }
 
 }

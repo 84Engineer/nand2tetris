@@ -1,17 +1,25 @@
 class Random {
 
     static int seed;
+	static int i;
 
-    function void setSeed(int newSeed) {
-        let seed = newSeed;
+    function void setSeed() {
+        let seed = 42;
+		let i = 1;
         return;
     }
 
     function int rand() {
-        let seed = seed + 12345;
+        let seed = seed + 12355;
         if (seed < 0) {
             let seed = seed - 32767 - 1;
-        }
+        } else {
+			let i = i * i;
+			if (i > 32000) {
+				let i = 1;
+			}
+			let seed = seed - i;
+		}
         return seed;
     }
 
